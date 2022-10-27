@@ -26,7 +26,8 @@ private:
 	// DATA MEMBERS
 	const Window m_Window{};
 
-	bezierUtils::FlightPath m_FlightPath{};
+	std::vector<bezierUtils::FlightPath> m_EnemyFlightPaths{};
+	
 	const int m_Speed{ 20 };
 	float m_Offset{};
 

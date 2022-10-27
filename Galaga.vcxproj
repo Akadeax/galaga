@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="BezierGenerator.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="EnemyPaths.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix2x3.cpp" />

@@ -56,6 +56,9 @@
     <ClCompile Include="BezierGenerator.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyPaths.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
