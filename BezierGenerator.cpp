@@ -76,8 +76,6 @@ FlightPath bezierUtils::CalculateFlightPath(FlightPathData flightPathData)
 		combinedPoints.insert(combinedPoints.end(), std::next(currentPoints.begin()), currentPoints.end());
 	}
 
-	std::cout << "Len: " << combinedPoints.size() << std::endl;
-
 	return FlightPath{ combinedPoints };
 }
 
