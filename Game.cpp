@@ -5,7 +5,7 @@
 #include "utils.h"
 #include "BezierGenerator.h"
 #include "constants.h"
-#include "EnemyPaths.cpp"
+#include "EnemyPaths.h"
 
 Game::Game(const Window & window)
 	:m_Window{ window }
@@ -38,7 +38,12 @@ void Game::Draw() const
 
 	constexpr float SQUARE_SIZE{ 50 };
 	utils::SetColor(Color4f{ 1, 0, 0, 1 });
-	bezierUtils::DrawFlightPath(m_EnemyFlightPaths[0]);
+	for (int i{}; i<=3;++i)
+	{
+		bezierUtils::DrawFlightPath(m_EnemyFlightPaths[i]);
+	}
+	//bezierUtils::DrawFlightPath(m_EnemyFlightPaths[1]);
+	
 
 	Vector2f smootheTransition = bezierUtils::Lerp(m_EnemyFlightPaths[0].combinedBezierPoints[int(m_Offset)], m_EnemyFlightPaths[0].combinedBezierPoints[int(m_Offset) + 1],
 	                                              m_Offset - int(m_Offset));

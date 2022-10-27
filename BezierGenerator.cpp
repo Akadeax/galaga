@@ -21,7 +21,7 @@ Bezier bezierUtils::CalculateBezier(Vector2f pointA, Vector2f pointB, Vector2f p
 
 	for (int i{}; i < BEZIER_STEPS_AMOUNT; i++)
 	{
-		const float multiplier{ (1.f / BEZIER_STEPS_AMOUNT) * i };
+		const float multiplier{ (1.f / (BEZIER_STEPS_AMOUNT-1)) * i };
 		//the lerps for the first 3 lines
 		AB_Lerp = Lerp(pointA, pointB, multiplier);
 		BC_Lerp = Lerp(pointB, pointC, multiplier);
@@ -65,7 +65,7 @@ FlightPath bezierUtils::CalculateFlightPath(FlightPathData flightPathData)
 	constexpr float scaleX{ g_WindowWidth / FlightPathData::size };
 	constexpr float scaleY{ g_WindowHeight / FlightPathData::size };
 
-	std::vector<Vector2f> combinedPoints{ BEZIER_STEPS_AMOUNT * flightPathData.data.size() };
+	std::vector<Vector2f> combinedPoints{};
 	for (int i{ 0 }; i < flightPathData.data.size(); ++i)
 	{
 		std::vector<Vector2f>& currentPoints{ beziers[i].curvePoints };

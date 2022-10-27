@@ -163,6 +163,7 @@
     <ClInclude Include="BezierGenerator.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="EnemyPaths.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Matrix2x3.h" />
     <ClInclude Include="pch.h" />

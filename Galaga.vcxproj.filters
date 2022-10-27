@@ -100,5 +100,8 @@
     <ClInclude Include="constants.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyPaths.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

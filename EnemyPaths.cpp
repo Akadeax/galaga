@@ -1,7 +1,6 @@
 #include "pch.h"
-#include <vector>
+#include "EnemyPaths.h"
 #include "Vector2f.h"
-#include "BezierGenerator.h"
 
 std::vector<bezierUtils::FlightPath> GetEnemyPaths()
 {
@@ -17,7 +16,7 @@ std::vector<bezierUtils::FlightPath> GetEnemyPaths()
 	}));
 	enemyPaths.push_back(CalculateFlightPath(bezierUtils::FlightPathData{
 		{
-			bezierUtils::BezierData{ Vector2f{0, 1}, Vector2f{7.33f, 1.5f}, Vector2f{2, 3}, Vector2f{2, 5} },
+			bezierUtils::BezierData{ Vector2f{10, 1}, Vector2f{7.33f, 1.5f}, Vector2f{2, 3}, Vector2f{2, 5} },
 			bezierUtils::BezierData{ Vector2f{2, 5}, Vector2f{2, 8}, Vector2f{2, 8}, Vector2f{3, 8} },
 			bezierUtils::BezierData{ Vector2f{3, 8}, Vector2f{4, 8}, Vector2f{4, 8}, Vector2f{4, 6.5f} },
 			bezierUtils::BezierData{ Vector2f{4, 6.5f}, Vector2f{4, 5}, Vector2f{4, 5}, Vector2f{3, 5} },
