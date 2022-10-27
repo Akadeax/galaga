@@ -12,15 +12,32 @@ namespace bezierUtils
 		std::vector<Vector2f> curvePoints = std::vector<Vector2f>(BEZIER_STEPS_AMOUNT);
 	};
 
+	struct BezierData
+	{
+		Vector2f a{}, b{}, c{}, d{};
+	};
+
 	struct FlightPath
 	{
-		std::vector<Bezier> paths;
-		float pathWidth{}, pathHeight{}, windowWidth{}, windowHeight{}, xScaling{}, yScaling{};
+		std::vector<Vector2f> combinedBezierPoints{};
+	};
+
+	struct FlightPathData
+	{
+		static constexpr float size{ 10.f };
+		std::vector<BezierData> data{};
 	};
 
 	Bezier CalculateBezier(Vector2f pointA, Vector2f pointB, Vector2f pointC, Vector2f pointD);
-	float Lerp(float a, float b, float multiplier);
-	Vector2f Lerp(Vector2f a, Vector2f b, float multiplier);
+	Bezier CalculateBezier(BezierData data);
+
+	FlightPath CalculateFlightPath(FlightPathData flightPathData);
+
 	void DrawBezier(Bezier bezier, float lineWidth);
 	void FillBezier(Bezier bezier);
+	void DrawFlightPath(FlightPath path, int lineWidth = 1);
+
+	float Lerp(float a, float b, float multiplier);
+	Vector2f Lerp(Vector2f a, Vector2f b, float multiplier);
+
 }

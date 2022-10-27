@@ -19,22 +19,15 @@ Game::~Game()
 
 void Game::Initialize()
 {
-	m_FlightPath.windowWidth = g_WindowWidth;
-	m_FlightPath.windowHeight = g_WindowHeight;
-	m_FlightPath.pathWidth = 10;
-	m_FlightPath.pathHeight = 10;
-	m_FlightPath.xScaling = m_FlightPath.windowWidth / m_FlightPath.pathWidth;
-	m_FlightPath.yScaling = m_FlightPath.windowHeight / m_FlightPath.pathHeight;
-
-	m_FlightPath.paths.push_back(bezierUtils::CalculateBezier(Vector2f{ 0 * m_FlightPath.xScaling,1 * m_FlightPath.yScaling }, Vector2f{ 2.66f * m_FlightPath.xScaling,1.5f * m_FlightPath.yScaling }, Vector2f{ 8 * m_FlightPath.xScaling,3 * m_FlightPath.yScaling }, Vector2f{ 8 * m_FlightPath.xScaling,5 * m_FlightPath.yScaling }));
-
-	m_FlightPath.paths.push_back(bezierUtils::CalculateBezier(Vector2f{ 8 * m_FlightPath.xScaling,5 * m_FlightPath.yScaling }, Vector2f{ 8 * m_FlightPath.xScaling,8 * m_FlightPath.yScaling }, Vector2f{ 8 * m_FlightPath.xScaling,8 * m_FlightPath.yScaling }, Vector2f{ 7 * m_FlightPath.xScaling,8 * m_FlightPath.yScaling }));
-
-	m_FlightPath.paths.push_back(bezierUtils::CalculateBezier(Vector2f{ 7 * m_FlightPath.xScaling,8 * m_FlightPath.yScaling }, Vector2f{ 6 * m_FlightPath.xScaling,8 * m_FlightPath.yScaling }, Vector2f{ 6 * m_FlightPath.xScaling,8 * m_FlightPath.yScaling }, Vector2f{ 6 * m_FlightPath.xScaling,6.5f * m_FlightPath.yScaling }));
-
-	m_FlightPath.paths.push_back(bezierUtils::CalculateBezier(Vector2f{ 6 * m_FlightPath.xScaling,6.5f * m_FlightPath.yScaling }, Vector2f{ 6 * m_FlightPath.xScaling,5 * m_FlightPath.yScaling }, Vector2f{ 6 * m_FlightPath.xScaling,5 * m_FlightPath.yScaling }, Vector2f{ 7 * m_FlightPath.xScaling,5 * m_FlightPath.yScaling }));
-
-	m_FlightPath.paths.push_back(bezierUtils::CalculateBezier(Vector2f{ 7 * m_FlightPath.xScaling,5 * m_FlightPath.yScaling }, Vector2f{ 8 * m_FlightPath.xScaling,5 * m_FlightPath.yScaling }, Vector2f{ 9.33f * m_FlightPath.xScaling,6 * m_FlightPath.yScaling }, Vector2f{ 10 * m_FlightPath.xScaling,8 * m_FlightPath.yScaling }));
+	m_FlightPath = bezierUtils::CalculateFlightPath(bezierUtils::FlightPathData{
+		{
+			bezierUtils::BezierData{ Vector2f{0, 1}, Vector2f{2.66f, 1.5f}, Vector2f{8, 3}, Vector2f{8, 5} },
+			bezierUtils::BezierData{ Vector2f{8, 5}, Vector2f{8, 8}, Vector2f{8, 8}, Vector2f{7, 8} },
+			bezierUtils::BezierData{ Vector2f{7, 8}, Vector2f{6, 8}, Vector2f{6, 8}, Vector2f{6, 6.5f} },
+			bezierUtils::BezierData{ Vector2f{6, 6.5f}, Vector2f{6, 5}, Vector2f{6, 5}, Vector2f{7, 5} },
+			bezierUtils::BezierData{ Vector2f{7, 5}, Vector2f{8, 5}, Vector2f{9.33f, 6}, Vector2f{10, 8} },
+		}
+	});
 }
 
 void Game::Cleanup()
@@ -44,10 +37,6 @@ void Game::Cleanup()
 void Game::Update(float deltaTime)
 {
 	m_Offset += static_cast<float>(m_Speed) * deltaTime;
-	if(m_Offset >= bezierUtils::BEZIER_STEPS_AMOUNT * m_FlightPath.paths.size() - 1)
-	{
-		m_Offset = 0;
-	}
 }
 
 void Game::Draw() const
@@ -56,20 +45,9 @@ void Game::Draw() const
 
 	constexpr float SQUARE_SIZE{ 50 };
 	utils::SetColor(Color4f{ 1, 0, 0, 1 });
+	bezierUtils::DrawFlightPath(m_FlightPath);
 
-	for (int i{ 0 }; i < m_FlightPath.paths.size(); ++i)
-	{
-		DrawBezier(m_FlightPath.paths[i], 1);
-	}
-
-	std::vector<Vector2f> combinedPaths = std::vector<Vector2f>();
-	for (int i{ 0 }; i < m_FlightPath.paths.size(); ++i)
-	{
-		const std::vector<Vector2f>& current = m_FlightPath.paths[i].curvePoints;
-		combinedPaths.insert(combinedPaths.end(), current.begin(), current.end());
-	}
-
-	Vector2f smootheTransition = bezierUtils::Lerp(combinedPaths[int(m_Offset)], combinedPaths[int(m_Offset) + 1],
+	Vector2f smootheTransition = bezierUtils::Lerp(m_FlightPath.combinedBezierPoints[int(m_Offset)], m_FlightPath.combinedBezierPoints[int(m_Offset) + 1],
 	                                              m_Offset - int(m_Offset));
 	smootheTransition.x -= SQUARE_SIZE / 2;
 	smootheTransition.y -= SQUARE_SIZE / 2;

@@ -1,12 +1,17 @@
 #include "pch.h"
 #include "BezierGenerator.h"
+
+#include "constants.h"
+#include <iostream>
+
+#include "constants.h"
 #include "utils.h"
 
 using namespace bezierUtils;
 
 Bezier bezierUtils::CalculateBezier(Vector2f pointA, Vector2f pointB, Vector2f pointC, Vector2f pointD)
 {
-	std::vector<Vector2f> calculatedBezier = std::vector<Vector2f>(BEZIER_STEPS_AMOUNT);
+	std::vector<Vector2f> bezierPoints = std::vector<Vector2f>(BEZIER_STEPS_AMOUNT);
 	Vector2f AB_Lerp{};
 	Vector2f BC_Lerp{};
 	Vector2f CD_Lerp{};
@@ -26,23 +31,50 @@ Bezier bezierUtils::CalculateBezier(Vector2f pointA, Vector2f pointB, Vector2f p
 		BC_CD_Lerp = Lerp(BC_Lerp, CD_Lerp, multiplier);
 		//the point of the curve
 		curvePoint = Lerp(AB_BC_Lerp, BC_CD_Lerp, multiplier);
-		calculatedBezier[i] = curvePoint;
+		bezierPoints[i] = curvePoint;
 	}
-	Bezier solution{};
-	solution.curvePoints = calculatedBezier;
-	return solution;
+
+	return Bezier{ bezierPoints };
+}
+
+Bezier bezierUtils::CalculateBezier(BezierData data)
+{
+	return CalculateBezier(data.a, data.b, data.c, data.d);
 }
 
 float bezierUtils::Lerp(float a, float b, float multiplier)
 {
-	return (a + (b - a) * multiplier);
+	return a + (b - a) * multiplier;
 }
 
 Vector2f bezierUtils::Lerp(Vector2f a, Vector2f b, float multiplier)
 {
-	float x = Lerp(a.x, b.x, multiplier);
-	float y = Lerp(a.y, b.y, multiplier);
+	const float x = Lerp(a.x, b.x, multiplier);
+	const float y = Lerp(a.y, b.y, multiplier);
 	return Vector2f{ x,y };
+}
+
+FlightPath bezierUtils::CalculateFlightPath(FlightPathData flightPathData)
+{
+	std::vector<Bezier> beziers{ flightPathData.data.size() };
+	for(int i{ 0 }; i < flightPathData.data.size(); ++i)
+	{
+		beziers[i] = CalculateBezier(flightPathData.data[i]);
+	}
+
+	constexpr float scaleX{ g_WindowWidth / FlightPathData::size };
+	constexpr float scaleY{ g_WindowHeight / FlightPathData::size };
+
+	std::vector<Vector2f> combinedPoints{ BEZIER_STEPS_AMOUNT * flightPathData.data.size() };
+	for (int i{ 0 }; i < flightPathData.data.size(); ++i)
+	{
+		std::vector<Vector2f>& currentPoints{ beziers[i].curvePoints };
+		combinedPoints.insert(combinedPoints.end(), currentPoints.begin(), currentPoints.end());
+	}
+
+	std::cout << "Len: " << combinedPoints.size() << std::endl;
+
+	return FlightPath{ combinedPoints };
 }
 
 
@@ -63,4 +95,15 @@ void bezierUtils::FillBezier(Bezier bezier)
 	}
 
 	utils::FillPolygon(converted);
+}
+
+void bezierUtils::DrawFlightPath(FlightPath path, int lineWidth)
+{
+	constexpr float scaleX{ g_WindowWidth / FlightPathData::size };
+	constexpr float scaleY{ g_WindowHeight / FlightPathData::size };
+
+	for (int i{}; i < path.combinedBezierPoints.size() - 1; i++)
+	{
+		utils::DrawLine((path.combinedBezierPoints[i] * scaleX).ToPoint2f(), (path.combinedBezierPoints[i + 1] * scaleY).ToPoint2f(), static_cast<float>(lineWidth));
+	}
 }
