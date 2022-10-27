@@ -1,6 +1,8 @@
 #pragma once
 #include "BezierGenerator.h"
 
+class PlayerShip;
+class BulletPool;
 
 class Game final
 {
@@ -25,6 +27,9 @@ public:
 private:
 	// DATA MEMBERS
 	const Window m_Window{};
+
+	BulletPool* m_pBulletBool{ nullptr };
+	PlayerShip* m_pPlayer{ nullptr };
 
 	std::vector<bezierUtils::FlightPath> m_EnemyFlightPaths{};
 	int m_CurrentPath{ 2 };

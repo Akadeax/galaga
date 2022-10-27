@@ -5,11 +5,14 @@
 #include "utils.h"
 #include "BezierGenerator.h"
 #include "EnemyPaths.h"
+#include "PlayerShip.h"
+#include "BulletPool.h"
 
 Game::Game(const Window & window)
 	:m_Window{ window }
 {
 	Initialize();
+	m_pPlayer = new PlayerShip(m_pBulletBool);
 }
 
 Game::~Game()
@@ -20,10 +23,13 @@ Game::~Game()
 void Game::Initialize()
 {
 	m_EnemyFlightPaths = GetEnemyPaths();
+	m_pBulletBool = new BulletPool();
 }
 
 void Game::Cleanup()
 {
+	delete m_pPlayer;
+	delete m_pBulletBool;
 }
 
 void Game::Update(float deltaTime)
@@ -45,6 +51,9 @@ void Game::Update(float deltaTime)
 		m_CurrentPoint = 0;
 		m_CurrentPath = (m_CurrentPath + 1) % m_EnemyFlightPaths.size();
 	}
+
+	m_pPlayer->Update(deltaTime);
+	m_pBulletBool->Update(deltaTime);
 }
 
 void Game::Draw() const
@@ -58,7 +67,6 @@ void Game::Draw() const
 		bezierUtils::DrawFlightPath(m_EnemyFlightPaths[i]);
 	}
 	//bezierUtils::DrawFlightPath(m_EnemyFlightPaths[1]);
-	
 
 	Vector2f smootheTransition = bezierUtils::Lerp(m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints[int(m_CurrentPoint)], m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints[int(m_CurrentPoint) + 1],
 	                                              m_CurrentPoint - int(m_CurrentPoint));
@@ -66,6 +74,9 @@ void Game::Draw() const
 	smootheTransition.y -= SQUARE_SIZE / 2;
 
 	utils::FillRect(smootheTransition.ToPoint2f(), SQUARE_SIZE, SQUARE_SIZE);
+
+	m_pBulletBool->Draw();
+	m_pPlayer->Draw();
 }
 
 void Game::ProcessKeyDownEvent(const SDL_KeyboardEvent& e)

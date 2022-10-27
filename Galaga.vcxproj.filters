@@ -59,6 +59,15 @@
     <ClCompile Include="EnemyPaths.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerShip.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletPool.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -97,11 +106,20 @@
     <ClInclude Include="BezierGenerator.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="constants.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyPaths.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShip.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletPool.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
