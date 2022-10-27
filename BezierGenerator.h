@@ -37,7 +37,6 @@ namespace bezierUtils
 	void FillBezier(Bezier bezier);
 	void DrawFlightPath(FlightPath path, int lineWidth = 1);
 
-	float Lerp(float a, float b, float multiplier);
-	Vector2f Lerp(Vector2f a, Vector2f b, float multiplier);
-
+	float Lerp(float a, float b, float t);
+	Vector2f Lerp(Vector2f a, Vector2f b, float t);
 }

@@ -51,9 +51,9 @@ void Game::Draw() const
 {
 	ClearBackground();
 
-	constexpr float SQUARE_SIZE{ 50 };
+	constexpr float SQUARE_SIZE{ 25 };
 	utils::SetColor(Color4f{ 1, 0, 0, 1 });
-	for (int i{}; i<=3;++i)
+	for (int i{}; i <= 3; ++i)
 	{
 		bezierUtils::DrawFlightPath(m_EnemyFlightPaths[i]);
 	}

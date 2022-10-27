@@ -19,21 +19,24 @@ Bezier bezierUtils::CalculateBezier(Vector2f pointA, Vector2f pointB, Vector2f p
 	Vector2f BC_CD_Lerp{};
 	Vector2f curvePoint{};
 
+	constexpr float scalarX{ g_WindowWidth / FlightPathData::size };
+	constexpr float scalarY{ g_WindowHeight / FlightPathData::size };
 	for (int i{}; i < BEZIER_STEPS_AMOUNT; i++)
 	{
 		const float multiplier{ (1.f / (BEZIER_STEPS_AMOUNT-1)) * i };
-		//the lerps for the first 3 lines
+		// The lerps for the first 3 lines
 		AB_Lerp = Lerp(pointA, pointB, multiplier);
 		BC_Lerp = Lerp(pointB, pointC, multiplier);
 		CD_Lerp = Lerp(pointC, pointD, multiplier);
-		//the lerps for the 2 created lines
+		// The lerps for the 2 created lines
 		AB_BC_Lerp = Lerp(AB_Lerp, BC_Lerp, multiplier);
 		BC_CD_Lerp = Lerp(BC_Lerp, CD_Lerp, multiplier);
 		//the point of the curve
 		curvePoint = Lerp(AB_BC_Lerp, BC_CD_Lerp, multiplier);
 
-		curvePoint.x *= (g_WindowWidth / FlightPathData::size);
-		curvePoint.y *= (g_WindowHeight / FlightPathData::size);
+		// Scale the points into screen coordinates
+		curvePoint.x *= scalarX;
+		curvePoint.y *= scalarY;
 
 		bezierPoints[i] = curvePoint;
 	}
@@ -46,16 +49,14 @@ Bezier bezierUtils::CalculateBezier(BezierData data)
 	return CalculateBezier(data.a, data.b, data.c, data.d);
 }
 
-float bezierUtils::Lerp(float a, float b, float multiplier)
+float bezierUtils::Lerp(float a, float b, float t)
 {
-	return a + (b - a) * multiplier;
+	return a + (b - a) * t;
 }
 
-Vector2f bezierUtils::Lerp(Vector2f a, Vector2f b, float multiplier)
+Vector2f bezierUtils::Lerp(Vector2f a, Vector2f b, float t)
 {
-	const float x = Lerp(a.x, b.x, multiplier);
-	const float y = Lerp(a.y, b.y, multiplier);
-	return Vector2f{ x,y };
+	return Vector2f{ Lerp(a.x, b.x, t), Lerp(a.y, b.y, t) };
 }
 
 FlightPath bezierUtils::CalculateFlightPath(FlightPathData flightPathData)

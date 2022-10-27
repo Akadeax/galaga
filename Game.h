@@ -27,7 +27,7 @@ private:
 	const Window m_Window{};
 
 	std::vector<bezierUtils::FlightPath> m_EnemyFlightPaths{};
-	int m_CurrentPath{2};
+	int m_CurrentPath{ 2 };
 	const int m_SpeedMultiplier{ 500 };
 	float m_CurrentPoint{};
 
