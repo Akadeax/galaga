@@ -31,6 +31,10 @@ Bezier bezierUtils::CalculateBezier(Vector2f pointA, Vector2f pointB, Vector2f p
 		BC_CD_Lerp = Lerp(BC_Lerp, CD_Lerp, multiplier);
 		//the point of the curve
 		curvePoint = Lerp(AB_BC_Lerp, BC_CD_Lerp, multiplier);
+
+		curvePoint.x *= (g_WindowWidth / FlightPathData::size);
+		curvePoint.y *= (g_WindowHeight / FlightPathData::size);
+
 		bezierPoints[i] = curvePoint;
 	}
 
@@ -65,11 +69,11 @@ FlightPath bezierUtils::CalculateFlightPath(FlightPathData flightPathData)
 	constexpr float scaleX{ g_WindowWidth / FlightPathData::size };
 	constexpr float scaleY{ g_WindowHeight / FlightPathData::size };
 
-	std::vector<Vector2f> combinedPoints{};
-	for (int i{ 0 }; i < flightPathData.data.size(); ++i)
+	std::vector<Vector2f> combinedPoints{ beziers[0].curvePoints };
+	for (int i{ 1 }; i < flightPathData.data.size(); ++i)
 	{
 		std::vector<Vector2f>& currentPoints{ beziers[i].curvePoints };
-		combinedPoints.insert(combinedPoints.end(), currentPoints.begin(), currentPoints.end());
+		combinedPoints.insert(combinedPoints.end(), std::next(currentPoints.begin()), currentPoints.end());
 	}
 
 	std::cout << "Len: " << combinedPoints.size() << std::endl;
@@ -104,6 +108,6 @@ void bezierUtils::DrawFlightPath(FlightPath path, int lineWidth)
 
 	for (int i{}; i < path.combinedBezierPoints.size() - 1; i++)
 	{
-		utils::DrawLine((path.combinedBezierPoints[i] * scaleX).ToPoint2f(), (path.combinedBezierPoints[i + 1] * scaleY).ToPoint2f(), static_cast<float>(lineWidth));
+		utils::DrawLine(path.combinedBezierPoints[i].ToPoint2f(), path.combinedBezierPoints[i + 1].ToPoint2f(), static_cast<float>(lineWidth));
 	}
 }

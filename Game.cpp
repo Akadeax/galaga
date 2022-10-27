@@ -4,7 +4,6 @@
 #include <iostream>
 #include "utils.h"
 #include "BezierGenerator.h"
-#include "constants.h"
 #include "EnemyPaths.h"
 
 Game::Game(const Window & window)
@@ -29,7 +28,23 @@ void Game::Cleanup()
 
 void Game::Update(float deltaTime)
 {
-	m_Offset += static_cast<float>(m_Speed) * deltaTime;
+	// Make movement independent of distance between the points in the curve
+	const Vector2f current = m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints[static_cast<int>(m_CurrentPoint)];
+	const Vector2f next = m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints[static_cast<int>(m_CurrentPoint + 1)];
+	const float distanceCurrentNext = (current - next).Length();
+
+	const float movementAmount = static_cast<float>(m_SpeedMultiplier) / distanceCurrentNext * deltaTime;
+
+	// If this frames movement amount doesn't put the square beyond the last point
+	if (m_CurrentPoint + movementAmount < m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints.size() - 1)
+	{
+		m_CurrentPoint += movementAmount;
+	}
+	else
+	{
+		m_CurrentPoint = 0;
+		m_CurrentPath = (m_CurrentPath + 1) % m_EnemyFlightPaths.size();
+	}
 }
 
 void Game::Draw() const
@@ -45,8 +60,8 @@ void Game::Draw() const
 	//bezierUtils::DrawFlightPath(m_EnemyFlightPaths[1]);
 	
 
-	Vector2f smootheTransition = bezierUtils::Lerp(m_EnemyFlightPaths[0].combinedBezierPoints[int(m_Offset)], m_EnemyFlightPaths[0].combinedBezierPoints[int(m_Offset) + 1],
-	                                              m_Offset - int(m_Offset));
+	Vector2f smootheTransition = bezierUtils::Lerp(m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints[int(m_CurrentPoint)], m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints[int(m_CurrentPoint) + 1],
+	                                              m_CurrentPoint - int(m_CurrentPoint));
 	smootheTransition.x -= SQUARE_SIZE / 2;
 	smootheTransition.y -= SQUARE_SIZE / 2;
 
