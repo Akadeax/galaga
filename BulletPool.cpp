@@ -15,6 +15,8 @@ BulletPool::~BulletPool()
 	{
 		delete m_BulletPool[i];
 	}
+
+	delete m_pBulletTexture;
 }
 
 void BulletPool::ShootBullet(Bullet::ShootData data)
