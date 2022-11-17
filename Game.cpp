@@ -62,10 +62,7 @@ void Game::Draw() const
 
 	constexpr float SQUARE_SIZE{ 25 };
 	utils::SetColor(Color4f{ 1, 0, 0, 1 });
-	for (int i{}; i <= 3; ++i)
-	{
-		bezierUtils::DrawFlightPath(m_EnemyFlightPaths[i]);
-	}
+	bezierUtils::DrawFlightPath(m_EnemyFlightPaths[m_CurrentPath]);
 	//bezierUtils::DrawFlightPath(m_EnemyFlightPaths[1]);
 
 	Vector2f smootheTransition = bezierUtils::Lerp(m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints[int(m_CurrentPoint)], m_EnemyFlightPaths[m_CurrentPath].combinedBezierPoints[int(m_CurrentPoint) + 1],

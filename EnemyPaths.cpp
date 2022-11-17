@@ -33,6 +33,16 @@ std::vector<bezierUtils::FlightPath> GetEnemyPaths()
 			bezierUtils::BezierData{ Vector2f{4.5, 10}, Vector2f{4, -6}, Vector2f{14, 4}, Vector2f{0, 6.5f} },
 		}
 	}));
+	enemyPaths.push_back(CalculateFlightPath(bezierUtils::FlightPathData{
+		{
+			bezierUtils::BezierData{ Vector2f{0, 2}, Vector2f{2, 2}, Vector2f{4, 6}, Vector2f{4, 10} },
+		}
+	}));
+	enemyPaths.push_back(CalculateFlightPath(bezierUtils::FlightPathData{
+		{
+			bezierUtils::BezierData{ Vector2f{10, 2}, Vector2f{8, 2}, Vector2f{6, 6}, Vector2f{6, 10} },
+		}
+		}));
 	return enemyPaths;
 }
 

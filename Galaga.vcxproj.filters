@@ -15,6 +15,21 @@
       <Extensions>
       </Extensions>
     </Filter>
+    <Filter Include="Game\Entity">
+      <UniqueIdentifier>{34e9234c-4e3a-4385-9273-3a04d8edfef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Entity\Enemy">
+      <UniqueIdentifier>{67ae5af7-d6b3-4731-b280-c2217bc64f22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Entity\Enemy\Pathing">
+      <UniqueIdentifier>{6686d44a-d458-4933-aa6c-e4d34e47de3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Entity\Player">
+      <UniqueIdentifier>{558c2724-6ace-4695-a374-5a437fa56c29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Entity\Bullets">
+      <UniqueIdentifier>{5f760b67-017b-4b3d-9052-2e4b52a7ab2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -54,19 +69,19 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="BezierGenerator.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Entity\Enemy\Pathing</Filter>
     </ClCompile>
     <ClCompile Include="EnemyPaths.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Entity\Enemy\Pathing</Filter>
     </ClCompile>
     <ClCompile Include="PlayerShip.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletPool.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Entity\Player</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Entity\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletPool.cpp">
+      <Filter>Game\Entity\Bullets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,23 +118,23 @@
     <ClInclude Include="Game.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="BezierGenerator.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyPaths.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerShip.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletPool.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="constants.h">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierGenerator.h">
+      <Filter>Game\Entity\Enemy\Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPaths.h">
+      <Filter>Game\Entity\Enemy\Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShip.h">
+      <Filter>Game\Entity\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Game\Entity\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletPool.h">
+      <Filter>Game\Entity\Bullets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
