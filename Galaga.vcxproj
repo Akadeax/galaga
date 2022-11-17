@@ -143,6 +143,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletPool.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyPaths.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="BulletPool.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyPaths.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Matrix2x3.h" />

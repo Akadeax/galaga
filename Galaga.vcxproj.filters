@@ -83,6 +83,9 @@
     <ClCompile Include="BulletPool.cpp">
       <Filter>Game\Entity\Bullets</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Game\Entity\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -135,6 +138,9 @@
     </ClInclude>
     <ClInclude Include="BulletPool.h">
       <Filter>Game\Entity\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Game\Entity\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

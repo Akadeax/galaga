@@ -17,12 +17,13 @@ public:
 private:
 	BulletPool* m_pBulletBool{ nullptr };
 
+	float m_PlayerSize{ 25 };
 	float m_HorizontalSpeed{ 200 };
 	float m_XPosition{ g_WindowWidth / 2 };
-	const float m_HorizontalBound{ 25.f };
+	const float m_HorizontalBound{ m_PlayerSize };
 
-	const float m_YPosition{ 50 };
-	const Vector2f m_DrawSize{ Vector2f{50, 50} };
+	const float m_YPosition{ 25 };
+	const Vector2f m_DrawSize{ Vector2f{m_PlayerSize, m_PlayerSize} };
 
 	float m_CurrentShootCooldown{ 0.f };
 	const float m_ShootCooldown{ 0.15f };
